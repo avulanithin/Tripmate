@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}TripMate{% endblock %}</title>
+  
+  <!-- Link external CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">TripMate</div>
+    <nav class="nav-links">
+      <a href="{{ url_for('landing') }}">Home</a>
+      <a href="{{ url_for('packages') }}">Packages</a>
+      <a href="{{ url_for('budget') }}">Budget Tracker</a>
+      <a href="{{ url_for('about') }}">About</a>
+
+      <!-- Profile Dropdown -->
+      <div class="profile-menu">
+        <span>Profile ▾</span>
+        <div class="dropdown">
+          <a href="{{ url_for('login') }}">Admin</a>
+          <a href="{{ url_for('signup') }}">User</a> <!-- changed this line -->
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Dynamic Content -->
+  <main class="content">
+    {% block content %}
+    {% endblock %}
+  </main>
+
+</body>
+</html>

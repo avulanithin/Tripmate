@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Packages | TripMate{% endblock %}
+
+{% block content %}
+<div class="container">
+  <header class="page-header">
+    <h1>Explore Our Travel Packages</h1>
+    <p class="subheading">Choose your dream destination</p>
+  </header>
+
+  <main>
+    <div class="package-dropdown">
+      <label for="package-select">Choose a Package:</label>
+      <select id="package-select" onchange="fetchPackageDetails(this.value)">
+        <option value="">-- Select a Package --</option>
+        {% for package in packages %}
+        <option value="{{ package.name }}">{{ package.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div id="package-details" style="display:none;">
+      <h2 id="detail-name"></h2>
+      <p><strong>Duration:</strong> <span id="detail-duration"></span> days</p>
+      <p><strong>Price:</strong> ₹<span id="detail-price"></span></p>
+      <p><strong>Description:</strong> <span id="detail-description"></span></p>
+      <button class="book-btn" onclick="bookNow()">Book Now</button>
+    </div>
+  </main>
+</div>
+
+<script>
+function fetchPackageDetails(packageName) {
+    if (!packageName) {
+        document.getElementById('package-details').style.display = 'none';
+        return;
+    }
+
+    fetch(`/get_package_details?package_name=${encodeURIComponent(packageName)}`)
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+        } else {
+            document.getElementById('detail-name').innerText = data.name;
+            document.getElementById('detail-duration').innerText = data.duration;
+            document.getElementById('detail-price').innerText = data.price;
+            document.getElementById('detail-description').innerText = data.description;
+            document.getElementById('package-details').style.display = 'block';
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function bookNow() {
+    const packageName = document.getElementById('detail-name').innerText;
+
+    if (!packageName) {
+        alert('Please select a package to book.');
+        return;
+    }
+
+    fetch('/book-package', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          username:username,
+          package_name: packageName }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message);
+            // Optionally redirect:
+            // window.location.href = '/booking-success';
+        } else {
+            alert('Booking failed. Please try again.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Booking failed due to an error.');
+    });
+}
+</script>
+{% endblock %}

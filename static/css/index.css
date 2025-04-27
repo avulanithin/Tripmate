@@ -1,0 +1,96 @@
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 120px 20px;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url('/static/images/hero-bg.jpg') center/cover no-repeat;
+    color: #f9f9f9;
+    animation: fadeIn 2s ease;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  .hero-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    color: #00ffe1;
+    text-shadow: 2px 2px #000;
+  }
+  
+  .hero-content .highlight {
+    color: #ff6ec4;
+    font-weight: bold;
+  }
+  
+  .hero-content p {
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+    color: #e0e0e0;
+  }
+  
+  .cta-button {
+    background: linear-gradient(45deg, #ff6ec4, #7873f5);
+    color: white;
+    padding: 14px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: transform 0.3s, background 0.3s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  }
+  
+  .cta-button:hover {
+    transform: scale(1.1);
+    background: linear-gradient(45deg, #7873f5, #ff6ec4);
+  }
+  
+  /* Features Section */
+  .features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    padding: 80px 20px;
+    background: linear-gradient(to right, #ece9e6, #ffffff);
+  }
+  
+  .feature-box {
+    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    padding: 30px;
+    border-radius: 16px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+  }
+  
+  .feature-box:hover {
+    transform: translateY(-10px);
+  }
+  
+  .feature-box h3 {
+    color: #5f27cd;
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+  }
+  
+  .feature-box p {
+    color: #333;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  /* Responsive tweak */
+  @media (max-width: 768px) {
+    .hero-content h1 {
+      font-size: 2.5rem;
+    }
+    .feature-box {
+      width: 90%;
+    }
+  }
+  

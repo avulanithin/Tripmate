@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Package Details | TripMate{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <header class="page-header">
+    <h1>{{ package.name }}</h1>
+    <p class="subheading">Explore the details of this amazing package</p>
+  </header>
+
+  <div class="package-details">
+    <h3>Description:</h3>
+    <p>{{ package.description }}</p>
+    
+    <h3>Duration:</h3>
+    <p>{{ package.duration }} days</p>
+
+    <h3>Price:</h3>
+    <p>$ {{ package.price }}</p>
+
+    <h3>Destination:</h3>
+    <p>{{ package.destination }}</p>
+
+    <button class="book-btn" onclick="bookNow('{{ package.name }}')">Book Now</button>
+  </div>
+</div>
+
+<script>
+  function bookNow(packageName) {
+    alert("You're booking: " + packageName + "\nRedirecting to booking page...");
+    // window.location.href = "/book?package=" + encodeURIComponent(packageName);
+  }
+</script>
+
+{% endblock %}

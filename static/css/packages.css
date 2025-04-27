@@ -1,0 +1,84 @@
+/* packages.css */
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+  min-height: 100vh;
+  color: #333;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.page-header {
+  margin-bottom: 40px;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  color: #e60073;
+  margin-bottom: 10px;
+}
+
+.page-header .subheading {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.package-dropdown {
+  margin-bottom: 30px;
+}
+
+.package-dropdown label {
+  font-size: 1.1rem;
+  margin-right: 10px;
+}
+
+#package-select {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: 2px solid #e60073;
+  border-radius: 8px;
+  outline: none;
+}
+
+#package-details {
+  background-color: #ffffffcc;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  margin-top: 20px;
+  text-align: left;
+}
+
+#package-details h2 {
+  color: #e60073;
+  margin-bottom: 15px;
+}
+
+#package-details p {
+  font-size: 1rem;
+  margin: 10px 0;
+}
+
+.book-btn {
+  background-color: #e60073;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background 0.3s ease;
+}
+
+.book-btn:hover {
+  background-color: #c7005a;
+}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Home | TripMate{% endblock %}
+
+{% block content %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}"> <!-- External CSS file -->
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Welcome to <span class="highlight">TripMate</span></h1>
+      <p>Your ultimate colorful travel planning and budgeting partner.</p>
+      <a href="{{ url_for('packages') }}" class="cta-button">Explore Packages</a>
+    </div>
+  </section>
+
+</section>
+
+<section class="features">
+  <div class="feature-box">
+    <a href="{{ url_for('plan_smart') }}" class="feature-link">
+      <h3>🌟 Plan Smart</h3>
+      <p>Get exciting, personalized travel suggestions tailored perfectly to your vibe and budget!</p>
+    </a>
+  </div>
+  <div class="feature-box">
+    <a href="{{ url_for('manage_expenses') }}" class="feature-link">
+      <h3>💸 Manage Expenses</h3>
+      <p>Track your spending the easy way — stylish, smart, and simple for stress-free trips.</p>
+    </a>
+  </div>
+  <div class="feature-box">
+    <a href="{{ url_for('enjoy_more') }}" class="feature-link">
+      <h3>🏖️ Enjoy More</h3>
+      <p>Less planning, more living! Enjoy vibrant experiences that create memories for a lifetime.</p>
+    </a>
+  </div>
+</section>
+
+{% endblock %}
+

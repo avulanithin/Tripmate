@@ -1,0 +1,114 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Plan Smart - TripMate</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/concept.css') }}">
+</head>
+<body>
+
+<header>
+  <h1>Welcome, {{ email }} ({{ role }})</h1>
+</header>
+
+<main>
+  <!-- Plan Smart Tip Form Dropdown -->
+  <section class="plan-form">
+    <h2>Plan Smart</h2>
+    <p>Learn how to plan your trips smartly and efficiently!</p>
+
+    <!-- Dropdown Button to Show Form -->
+    <div class="dropdown">
+      <button class="dropbtn">Add a Tip</button>
+      <div class="dropdown-content">
+        <form action="{{ url_for('plan_smart') }}" method="POST">
+          <input type="text" name="tip" placeholder="Enter your smart planning tip..." required>
+          <button type="submit">Add Tip</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plan Tips Display -->
+  <section class="plan-tips">
+    <h3>Smart Planning Tips:</h3>
+    {% if tips %}
+      <ul>
+        {% for tip in tips %}
+          <li>{{ tip }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No tips added yet. Be the first to add!</p>
+    {% endif %}
+  </section>
+
+  <!-- Trip Itinerary Form Dropdown -->
+  <section class="itinerary-form">
+    <h3>Plan Your Itinerary</h3>
+
+    <!-- Dropdown Button to Show Form -->
+    <div class="dropdown">
+      <button class="dropbtn">Add Itinerary</button>
+      <div class="dropdown-content">
+        <form action="{{ url_for('plan_itinerary') }}" method="POST">
+          <input type="text" name="destination" placeholder="Enter Destination" required>
+          <input type="date" name="start_date" placeholder="Start Date" required>
+          <input type="date" name="end_date" placeholder="End Date" required>
+          <button type="submit">Add Itinerary</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Itinerary Display -->
+  <section class="itinerary-display">
+    <h3>Your Itinerary:</h3>
+    {% if itineraries %}
+      <ul>
+        {% for itinerary in itineraries %}
+          <li>{{ itinerary.destination }}: {{ itinerary.start_date }} to {{ itinerary.end_date }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No itineraries added yet. Add one to get started!</p>
+    {% endif %}
+  </section>
+
+  <!-- Budget Form Dropdown -->
+  <section class="budget-form">
+    <h3>Set Your Budget</h3>
+
+    <!-- Dropdown Button to Show Form -->
+    <div class="dropdown">
+      <button class="dropbtn">Set Budget</button>
+      <div class="dropdown-content">
+        <form action="{{ url_for('plan_budget') }}" method="POST">
+          <input type="text" name="category" placeholder="Enter Budget Category (e.g., food, travel)" required>
+          <input type="number" name="amount" placeholder="Enter Amount" required>
+          <button type="submit">Set Budget</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Budget Display -->
+  <section class="budget-display">
+    <h3>Your Budget:</h3>
+    {% if budgets %}
+      <ul>
+        {% for budget in budgets %}
+          <li>{{ budget.category }}: ${{ budget.amount }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No budgets added yet. Add your budget to get started!</p>
+    {% endif %}
+  </section>
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Budget Tracker | TripMate{% endblock %}
+
+{% block content %}
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/budget.css') }}"> <!-- External CSS -->
+
+<div class="budget-container">
+  <h1>Budget Tracker</h1>
+
+  <form class="budget-form" onsubmit="addExpense(event)">
+    <input type="text" id="expenseName" placeholder="Expense Name" required />
+    <input type="number" id="expenseAmount" placeholder="Amount (₹)" min="1" required />
+    <button type="submit">Add Expense</button>
+  </form>
+
+  <div class="budget-list">
+    <h3>Expenses</h3>
+    <div id="expenseItems"></div>
+    <div class="budget-total" id="totalAmount">Total: ₹0</div>
+  </div>
+</div>
+
+<script>
+  let total = 0;
+
+  function addExpense(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("expenseName").value;
+    const amount = parseFloat(document.getElementById("expenseAmount").value);
+
+    if (!name || isNaN(amount) || amount <= 0) {
+      alert("Please enter a valid name and amount.");
+      return;
+    }
+
+    const item = document.createElement("div");
+    item.className = "budget-item";
+    item.innerHTML = `<span>${name}</span><span>₹${amount}</span>`;
+
+    document.getElementById("expenseItems").appendChild(item);
+
+    total += amount;
+    document.getElementById("totalAmount").textContent = `Total: ₹${total}`;
+
+    document.getElementById("expenseName").value = "";
+    document.getElementById("expenseAmount").value = "";
+  }
+</script>
+
+{% endblock %}
