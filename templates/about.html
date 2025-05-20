@@ -1,54 +1,64 @@
-
 {% extends "base.html" %}
 
-{% block title %}About | TripMate{% endblock %}
+{% block title %}About | 𝓣𝓻𝓲𝓹𝓶𝓪𝓽𝓮{% endblock %}
 
 {% block content %}
+<section class="about-section" style="max-width: 820px; margin: 0 auto; padding: 2.5rem 1rem;">
+  <h1 style="color:; font-size:2.5rem; font-weight:700; margin-bottom:0.5rem;">
+    Meet Your Stress-Free Travel Companion
+  </h1>
+  <p style="font-size:1.2rem; color:#f5f5f5; margin-bottom:2rem;">
+    <strong>TripMate</strong> is here so you can stop worrying about planning, tracking, or organizing — and just <span style="color:#38bdf8;">explore and enjoy</span> your journey. We handle the details, you make the memories!
+  </p>
 
-<!-- Google Font for vibrant design -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
-<!-- Link to your external CSS file -->
-<link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
-
-<div class="about-container">
-  <section class="hero">
-    <h1>About TripMate</h1>
-    <p>Your ultimate companion for stress-free travel planning and budgeting.</p>
-  </section>
-
-  <section class="our-mission">
-    <h2>Our Mission</h2>
-    <p>
-      At TripMate, we believe that travel should be fun, affordable, and hassle-free.
-      Whether you're dreaming of sandy beaches, misty mountains, or bustling cities, we help you plan every detail while keeping your budget in check.
-    </p>
-  </section>
-
-  <section class="enblock">
-    <h2>Why Choose TripMate?</h2>
-    <div class="enblock-grid">
-      <div class="enblock-card">
-        <h3>Smart Planning</h3>
-        <p>We recommend personalized packages based on your preferences and budget.</p>
-      </div>
-      <div class="enblock-card">
-        <h3>Real-time Budget Tracking</h3>
-        <p>Stay on top of expenses with our intuitive travel budget tracker.</p>
-      </div>
-      <div class="enblock-card">
-        <h3>Trusted by Travelers</h3>
-        <p>Over 10,000 users have planned their trips with TripMate and loved it.</p>
-      </div>
+  <div style="display:flex; flex-wrap:wrap; gap:2rem; justify-content:space-between; margin-bottom:2.5rem;">
+    <div style="flex:1 1 220px; background:#161b22; border-radius:14px; padding:1.5rem; min-width:220px; box-shadow:0 2px 16px rgba(0,191,166,0.07);">
+      <div style="font-size:2rem; margin-bottom:0.5rem;">🧠</div>
+      <h3 style="color:#3B82F6; margin-bottom:0.5rem;">Smart Planning</h3>
+      <p style="color:#f5f5f5; font-size:1rem;">
+        Personalized suggestions, seamless itineraries, and must-see spots — all tailored for you. No more endless research!
+      </p>
     </div>
-  </section>
+    <div style="flex:1 1 220px; background:#161b22; border-radius:14px; padding:1.5rem; min-width:220px; box-shadow:0 2px 16px rgba(0,191,166,0.07);">
+      <div style="font-size:2rem; margin-bottom:0.5rem;">💸</div>
+      <h3 style="color:#3B82F6; margin-bottom:0.5rem;">Effortless Budgeting</h3>
+      <p style="color:#f5f5f5; font-size:1rem;">
+        Set your trip budget, track expenses in real time, and always know where you stand. Spend smart, travel more!
+      </p>
+    </div>
+    <div style="flex:1 1 220px; background:#161b22; border-radius:14px; padding:1.5rem; min-width:220px; box-shadow:0 2px 16px rgba(0,191,166,0.07);">
+      <div style="font-size:2rem; margin-bottom:0.5rem;">💬</div>
+      <h3 style="color:#3B82F6; margin-bottom:0.5rem;">Group Chat</h3>
+      <p style="color:#f5f5f5; font-size:1rem;">
+        Instantly connect with your travel buddies. Share plans, updates, and excitement — all in one place!
+      </p>
+    </div>
+    <div style="flex:1 1 220px; background:#161b22; border-radius:14px; padding:1.5rem; min-width:220px; box-shadow:0 2px 16px rgba(0,191,166,0.07);">
+      <div style="font-size:2rem; margin-bottom:0.5rem;">🧳</div>
+      <h3 style="color:#3B82F6; margin-bottom:0.5rem;">Easy Booking</h3>
+      <p style="color:#f5f5f5; font-size:1rem;">
+        Discover and book curated packages in seconds. All your bookings, all in one place — zero hassle.
+      </p>
+    </div>
+  </div>
 
-  <section class="contact">
-    <h2>Get in Touch</h2>
-    <p>Have questions, suggestions, or feedback? We'd love to hear from you!</p>
-    <a href="/contact" class="contact-btn">Contact Us</a>
-  </section>
-</div>
+  <div style="margin-top:2rem;">
+    <h2 style="color:#38bdf8; font-size:1.5rem;">Why TripMate?</h2>
+    <ul style="color:#f5f5f5; font-size:1.1rem; margin:1rem 0 2rem 1.5rem; line-height:1.7;">
+      <li>✨ <strong>Zero Stress:</strong> We handle the details, you enjoy the adventure.</li>
+      <li>🤝 <strong>Always Connected:</strong> Stay in sync with your group, wherever you are.</li>
+      <li>🚀 <strong>Ready for Anything:</strong> From budgeting to booking, TripMate’s got your back.</li>
+      <li><a href="{{ url_for('contact') }}">Contact</a></li>
+    </ul>
+  </div>
 
+  <div style="margin-top:2rem;">
+    <h2 style="color:#38bdf8;">Let's Connect!</h2>
+    <p style="color:#f5f5f5;">
+      Have questions or feedback? Email us at
+      <a href="mailto:support@tripmate.com" style="color:#90caf9;">support@tripmate.com</a>
+      or connect with us on our social channels below. We love hearing from fellow explorers!
+    </p>
+  </div>
+</section>
 {% endblock %}
-

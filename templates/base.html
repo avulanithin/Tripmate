@@ -4,38 +4,60 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>{% block title %}TripMate{% endblock %}</title>
-  
-  <!-- Link external CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  {% block head %}{% endblock %}
 </head>
 
 <body>
-
-  <!-- Navbar -->
-  <header class="navbar">
-    <div class="logo">TripMate</div>
-    <nav class="nav-links">
-      <a href="{{ url_for('landing') }}">Home</a>
-      <a href="{{ url_for('packages') }}">Packages</a>
-      <a href="{{ url_for('budget') }}">Budget Tracker</a>
-      <a href="{{ url_for('about') }}">About</a>
-
-      <!-- Profile Dropdown -->
-      <div class="profile-menu">
-        <span>Profile ▾</span>
-        <div class="dropdown">
-          <a href="{{ url_for('login') }}">Admin</a>
-          <a href="{{ url_for('signup') }}">User</a> <!-- changed this line -->
-        </div>
+  <div class="page-container">
+    <!-- Navbar START -->
+    <header>
+      <div class="logo">
+        <a href="{{ url_for('landing') }}" class="tripmate-logo">𝓣𝓻𝓲𝓹𝓶𝓪𝓽𝓮</a>
       </div>
-    </nav>
-  </header>
+      <nav class="nav-links">
+        <a href="{{ url_for('landing') }}">Home</a>
+        <a href="{{ url_for('packages') }}">Packages</a>
+        <a href="{{ url_for('budget') }}">Budget Tracker</a>
+        <a href="{{ url_for('plan_smart') }}">Plan Smart</a>
+        <a href="{{ url_for('group_chat') }}">Group Chat</a>
+        <a href="{{ url_for('about') }}">About</a>
+        <a href="{{ url_for('my_bookings') }}">My Bookings</a>
+        {% if session.get('email') %}
+          <div class="profile-dropdown">
+            <button class="profile-btn">
+              {% if user and user.profile_pic %}
+                <img src="{{ url_for('static', filename='profile_pics/' ~ user.profile_pic) }}" alt="Profile" class="navbar-avatar">
+              {% elif user and user.name %}
+                <span class="navbar-avatar-initial">{{ user.name[0]|upper }}</span>
+              {% else %}
+                <span class="navbar-avatar-initial">U</span>
+              {% endif %}
+              Profile ▾
+            </button>
+            <div class="dropdown-content">
+              <a href="{{ url_for('view_profile') }}">View Profile</a>
+              <a href="{{ url_for('edit_profile', user_id=user._id) }}">Edit Profile</a>
+              <a href="{{ url_for('logout') }}">Logout</a>
+            </div>
+          </div>
+        {% else %}
+          <a class="login-button" href="{{ url_for('login') }}">Login</a>
+        {% endif %}
+      </nav>
+    </header>
+    <!-- Navbar END -->
 
-  <!-- Dynamic Content -->
-  <main class="content">
-    {% block content %}
-    {% endblock %}
-  </main>
+    <main>
+      {% block content %}
+      {% endblock %}
+    </main>
 
+    <!-- Footer START -->
+    {% include 'footer.html' %}
+    <!-- Footer END -->
+  </div>
 </body>
 </html>
+
+

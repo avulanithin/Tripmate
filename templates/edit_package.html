@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Packages - TripMate Admin</title>
+</head>
+<body>
+    <h1>Manage Packages</h1>
+
+    <h2>Edit Package</h2>
+    <!-- Form for editing a package -->
+    <form id="edit-package-form" onsubmit="editPackage(); return false;">
+        <input type="hidden" name="package_id" value="{{ package.id }}">
+
+        <label for="package_name">Package Name:</label>
+        <input type="text" id="package_name" name="package_name" value="{{ package.name }}" required><br><br>
+
+        <label for="package_price">Package Price:</label>
+        <input type="number" id="package_price" name="package_price" value="{{ package.price }}" required><br><br>
+
+        <label for="package_description">Package Description:</label><br>
+        <textarea id="package_description" name="package_description" required>{{ package.description }}</textarea><br><br>
+
+        <button type="submit">Update Package</button>
+    </form>
+
+    <h2>Delete Package</h2>
+    <!-- Form for deleting a package -->
+    <form onsubmit="deletePackage(); return false;">
+        <label for="package_id_delete">Package ID to Delete:</label>
+        <input type="number" id="package_id_delete" name="package_id_delete" placeholder="Enter Package ID" required>
+
+        <button type="submit" style="color: red;">Delete Package</button>
+    </form>
+
+    <script>
+        function editPackage() {
+            const formData = new FormData(document.getElementById('edit-package-form'));
+
+            fetch('/api/edit-package', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message || data.error);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error while updating the package.');
+            });
+        }
+
+        function deletePackage() {
+            const packageId = document.getElementById('package_id_delete').value;
+
+            const formData = new FormData();
+            formData.append('package_id', packageId);
+
+            fetch('/api/delete-package', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message || data.error);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error while deleting the package.');
+            });
+        }
+    </script>
+</body>
+</html>

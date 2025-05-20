@@ -1,36 +1,78 @@
+<!-- filepath: c:\Users\avula\full_stack_project\Tripmate\templates\login_signup.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login | TripMate</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}"> <!-- Linked external CSS file -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login/Signup | 𝓣𝓻𝓲𝓹𝓶𝓪𝓽𝓮</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="login-container">
-    <h2>Login to <span class="highlight">TripMate</span></h2>
-    <form id="loginForm" action="/login" method="POST">
-      <input type="email" name="email" placeholder="Email" required />
-      <input type="password" name="password" placeholder="Password" required />
+  <!-- Video Background -->
+  <div class="video-background">
+    <video autoplay muted loop playsinline>
+      <source src="{{ url_for('static', filename='videos/background.mp4') }}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="video-overlay"></div>
+  </div>
+
+  <!-- Card Container -->
+  <div class="auth-container">
+    <div class="tabs">
+      <button id="login-tab" class="tab active" onclick="switchTab('login')">Login</button>
+      <button id="signup-tab" class="tab" onclick="switchTab('signup')">Sign Up</button>
+    </div>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Login Form -->
+    <form id="login-form" class="form active" method="POST" action="{{ url_for('login') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
       <button type="submit">Login</button>
-      <p class="error" id="errorMsg"></p>
     </form>
+
+    <!-- Signup Form -->
+    <form id="signup-form" class="form" method="POST" action="{{ url_for('signup') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label for="email">Email:</label>
+      <input type="email" id="signup-email" name="email" required>
+      <label for="password">Password:</label>
+      <input type="password" id="signup-password" name="password" required>
+      <label for="confirm-password">Confirm Password:</label>
+      <input type="password" id="confirm-password" name="confirm_password" required>
+      <div class="terms">
+        <input type="checkbox" id="terms" name="terms" required>
+        <label for="terms" style="display:inline;">I agree to the <a href="#">Terms and Conditions</a></label>
+      </div>
+      <button type="submit">Sign Up</button>
+    </form>
+
+    <button class="btn go-back" onclick="window.location.href='{{ url_for('index') }}'">Go Back</button>
   </div>
 
   <script>
-    document.getElementById("loginForm").addEventListener("submit", function (e) {
-      const email = e.target.email.value;
-      const password = e.target.password.value;
-      const errorMsg = document.getElementById("errorMsg");
-
-      if (!email.includes("@") || password.length < 4) {
-        e.preventDefault();
-        errorMsg.textContent = "Please enter a valid email and password (min 4 characters).";
-      } else {
-        errorMsg.textContent = "";
-      }
-    });
+    function switchTab(tab) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.form').forEach(f => f.classList.remove('active'));
+      document.getElementById(`${tab}-tab`).classList.add('active');
+      document.getElementById(`${tab}-form`).classList.add('active');
+    }
   </script>
 </body>
 </html>

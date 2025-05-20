@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard | TripMate{% endblock %}
+
+{% block head %}
+  <style>
+    .content-wrap {
+      padding: 20px;
+      color: #f5f5f5;
+    }
+    h1, h2 {
+      color: #3B82F6;
+    }
+    section {
+      margin-bottom: 30px;
+    }
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #444;
+      border-radius: 5px;
+      background-color: #1c2128;
+      color: #f5f5f5;
+    }
+    form button {
+      padding: 10px 20px;
+      background-color: #3B82F6;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    form button:hover {
+      background-color: #009e8a;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: #161b22;
+      color: #f5f5f5;
+    }
+    table th, table td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #2c2f36;
+    }
+    table th {
+      background-color: #1f262e;
+      color: #3B82F6;
+    }
+    table a {
+      text-decoration: none;
+      color: #3B82F6;
+      margin-right: 10px;
+    }
+    .delete-btn {
+      color: #ff4d4d;
+    }
+    .delete-btn:hover {
+      color: #e63946;
+    }
+    .back-button {
+      padding: 10px 20px;
+      background-color: #3B82F6;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .back-button:hover {
+      background-color: #009e8a;
+      transform: scale(1.05);
+    }
+    .back-button:active {
+      background-color: #00796b;
+      transform: scale(0.98);
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+<main class="content-wrap">
+  <h1>Admin Dashboard</h1>
+
+  <!-- Add Package Form -->
+  <section>
+    <h2>Add a New Package</h2>
+    <form method="POST" action="{{ url_for('add_package') }}" enctype="multipart/form-data">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label for="title">Package Title:</label>
+      <input type="text" id="title" name="title" required>
+      <br>
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" required></textarea>
+      <br>
+      <label for="price">Price:</label>
+      <input type="number" id="price" name="price" required>
+      <br>
+      <label for="total_days">Total Days:</label>
+      <input type="number" id="total_days" name="total_days" required>
+      <br>
+      <label for="image">Upload Image:</label>
+      <input type="file" id="image" name="image" accept="image/*">
+      <br>
+      <label for="places">Places (comma-separated):</label>
+      <input type="text" id="places" name="places">
+      <br>
+      <label for="hotels">Hotels (comma-separated):</label>
+      <input type="text" id="hotels" name="hotels">
+      <br>
+      <button type="submit">Add Package</button>
+    </form>
+  </section>
+
+  <!-- View and Manage Packages -->
+  <section>
+    <h2>Manage Packages</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Image</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for package in packages %}
+          <tr>
+            <td>{{ package['title'] }}</td>
+            <td>{{ package['description'] }}</td>
+            <td>₹{{ package['price'] }}</td>
+            <td>
+              {% if package['image_path'] %}
+                <img src="{{ url_for('static', filename='uploads/' + package['image_path']) }}" alt="Package Image" width="100">
+              {% else %}
+                No Image
+              {% endif %}
+            </td>
+            <td>
+              <a href="{{ url_for('edit_package', package_id=package['_id']) }}">Edit</a> |
+              <a href="{{ url_for('delete_package', package_id=package['_id']) }}" 
+                 class="delete-btn" 
+                 onclick="return confirm('Are you sure you want to delete this package?');">
+                Delete
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+</main>
+{% endblock %}

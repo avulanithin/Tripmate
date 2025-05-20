@@ -1,103 +1,250 @@
-body {
-    background: linear-gradient(to right, #ffdde1, #fcc6c1);
-    background-attachment: fixed;
-    font-family: 'Poppins', sans-serif;
-  }
-  
+/* General Layout */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #0d1117; /* Dark background */
+  color: #f0f0f0; /* Light text */
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Main content grows to fill space */
+main, .content-wrap {
+  flex: 1 0 auto;
+}
+
+.content-wrap {
+  padding: 20px;
+}
+
+/* Budget Container */
+.budget-container {
+  max-width: 700px;
+  margin: 3rem auto;
+  padding: 2rem 2.5rem;
+  background: rgba(33, 38, 45, 0.9); /* Dark card with slight transparency */
+  border: 2px solid rgba(144, 202, 249, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(144, 202, 249, 0.1);
+  color: #f0f0f0;
+}
+
+/* Title */
+.budget-container h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #90caf9;
+  margin-bottom: 1.5rem;
+  text-shadow: 1px 1px 3px rgba(144, 202, 249, 0.3);
+}
+
+/* Form */
+.budget-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.budget-form input[type="text"],
+.budget-form input[type="number"] {
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  border: 2px solid #90caf9;
+  border-radius: 10px;
+  outline: none;
+  background: #1c1f26;
+  color: #fff;
+  transition: border 0.3s ease;
+}
+
+.budget-form input:focus {
+  border-color: #64b5f6;
+}
+
+.budget-form button {
+  background-color: #2196f3;
+  color: #fff;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.budget-form button:hover {
+  background-color: #1976d2;
+  transform: scale(1.05);
+}
+
+/* Expense List */
+.budget-list {
+  margin-top: 2rem;
+}
+
+.budget-list h3 {
+  font-size: 1.3rem;
+  color: #90caf9;
+  border-bottom: 2px solid #90caf9;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Individual Budget Item */
+.budget-item {
+  display: flex;
+  justify-content: space-between;
+  background-color: #1c1f26;
+  padding: 0.9rem 1.2rem;
+  border-radius: 10px;
+  margin-bottom: 0.6rem;
+  font-size: 1rem;
+  color: #e0e0e0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Total Amount */
+.budget-total {
+  text-align: right;
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: #64b5f6;
+  margin-top: 1.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 500px) {
   .budget-container {
-    max-width: 700px;
-    margin: 3rem auto;
-    padding: 2rem 2.5rem;
-    backdrop-filter: blur(12px);
-    background: rgba(255, 255, 255, 0.2);
-    border: 2px solid rgba(255, 182, 193, 0.4);
-    border-radius: 20px;
-    box-shadow: 0 8px 30px rgba(255, 182, 193, 0.3);
-    color: #333;
+    padding: 1.5rem;
   }
-  
-  .budget-container h1 {
-    text-align: center;
-    font-size: 2.5rem;
-    color: #ff4081;
-    margin-bottom: 1.5rem;
-    text-shadow: 1px 1px 2px rgba(255, 64, 129, 0.2);
-  }
-  
-  .budget-form {
-    display: flex;
+}
+
+/* Navbar (updated for dark theme) */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #161b22;
+  border-bottom: 1px solid #30363d;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.nav-links a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #f0f0f0;
+}
+
+/* Profile Dropdown */
+.profile-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-btn {
+  background-color: #21262d;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  color: #f0f0f0;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #21262d;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.3);
+  z-index: 1;
+}
+
+.profile-dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #fff;
+}
+
+/* Footer styles */
+footer {
+  width: 100%;
+  min-height: 120px;      /* Consistent height */
+  background: #0d1117;
+  color: #f0f0f0;
+  padding: 2rem 0 1rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.footer-container {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.footer-section {
+  flex: 1 1 200px;
+  margin: 0 1rem;
+}
+
+@media (max-width: 800px) {
+  .footer-container {
     flex-direction: column;
-    gap: 1rem;
+    align-items: center;
+    gap: 1.5rem;
   }
-  
-  .budget-form input[type="text"],
-  .budget-form input[type="number"] {
-    padding: 0.8rem 1rem;
-    font-size: 1rem;
-    border: 2px solid #ffb6c1;
-    border-radius: 10px;
-    outline: none;
-    background: #fff;
-    color: #333;
-    transition: border 0.3s ease;
+  .footer-section {
+    margin: 0;
+    text-align: center;
   }
-  
-  .budget-form input:focus {
-    border-color: #ff4081;
-  }
-  
-  .budget-form button {
-    background-color: #ff4081;
-    color: #fff;
-    padding: 0.8rem;
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
-  }
-  
-  .budget-form button:hover {
-    background-color: #f50057;
-    transform: scale(1.05);
-  }
-  
-  .budget-list {
-    margin-top: 2rem;
-  }
-  
-  .budget-list h3 {
-    font-size: 1.3rem;
-    color: #e91e63;
-    border-bottom: 2px solid #e91e63;
-    padding-bottom: 0.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  .budget-item {
-    display: flex;
-    justify-content: space-between;
-    background-color: rgba(255, 255, 255, 0.6);
-    padding: 0.9rem 1.2rem;
-    border-radius: 10px;
-    margin-bottom: 0.6rem;
-    font-size: 1rem;
-    color: #444;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  }
-  
-  .budget-total {
-    text-align: right;
-    font-weight: 600;
-    font-size: 1.3rem;
-    color: #d81b60;
-    margin-top: 1.5rem;
-  }
-  
-  @media (max-width: 500px) {
-    .budget-container {
-      padding: 1.5rem;
-    }
-  }
-  
+}
+
+/* Footer */
+.footer {
+  background-color: #0d1117;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+  margin-top: auto;
+}
+
+.footer a {
+  color: #90caf9;
+  text-decoration: underline;
+}
+
+/* Responsive Images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.responsive-img {
+  max-width: 90%;
+  max-height: 500px;
+  object-fit: cover;
+  border-radius: 10px;
+}

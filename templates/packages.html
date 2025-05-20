@@ -1,89 +1,26 @@
 {% extends "base.html" %}
 
-{% block title %}Packages | TripMate{% endblock %}
+{% block title %}Packages | 𝓣𝓻𝓲𝓹𝓶𝓪𝓽𝓮{% endblock %}
 
 {% block content %}
-<div class="container">
-  <header class="page-header">
-    <h1>Explore Our Travel Packages</h1>
-    <p class="subheading">Choose your dream destination</p>
-  </header>
-
-  <main>
-    <div class="package-dropdown">
-      <label for="package-select">Choose a Package:</label>
-      <select id="package-select" onchange="fetchPackageDetails(this.value)">
-        <option value="">-- Select a Package --</option>
-        {% for package in packages %}
-        <option value="{{ package.name }}">{{ package.name }}</option>
-        {% endfor %}
-      </select>
-    </div>
-
-    <div id="package-details" style="display:none;">
-      <h2 id="detail-name"></h2>
-      <p><strong>Duration:</strong> <span id="detail-duration"></span> days</p>
-      <p><strong>Price:</strong> ₹<span id="detail-price"></span></p>
-      <p><strong>Description:</strong> <span id="detail-description"></span></p>
-      <button class="book-btn" onclick="bookNow()">Book Now</button>
-    </div>
-  </main>
+<h1>Our Packages</h1>
+<div class="packages-container">
+    {% for package in packages %}
+        <div class="card">
+            <h3>{{ package.title }}</h3>
+            <p>{{ package.description }}</p>
+            <p><strong>Price:</strong> ₹{{ package.price }}</p>
+            <p><strong>Total Days:</strong> {{ package.total_days }}</p>
+            {% if package.image_path %}
+                <img src="{{ url_for('static', filename='uploads/' + package.image_path) }}" alt="Package Image" width="100%">
+            {% endif %}
+            <form method="POST" action="{{ url_for('book_package') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="package_title" value="{{ package.title }}">
+                <input type="hidden" name="destination" value="{{ package.title }}">  <!-- ✅ Added -->
+                <button type="submit" class="btn btn-primary">Book</button>
+            </form>
+        </div>
+    {% endfor %}
 </div>
-
-<script>
-function fetchPackageDetails(packageName) {
-    if (!packageName) {
-        document.getElementById('package-details').style.display = 'none';
-        return;
-    }
-
-    fetch(`/get_package_details?package_name=${encodeURIComponent(packageName)}`)
-    .then(response => response.json())
-    .then(data => {
-        if (data.error) {
-            alert(data.error);
-        } else {
-            document.getElementById('detail-name').innerText = data.name;
-            document.getElementById('detail-duration').innerText = data.duration;
-            document.getElementById('detail-price').innerText = data.price;
-            document.getElementById('detail-description').innerText = data.description;
-            document.getElementById('package-details').style.display = 'block';
-        }
-    })
-    .catch(error => console.error('Error:', error));
-}
-
-function bookNow() {
-    const packageName = document.getElementById('detail-name').innerText;
-
-    if (!packageName) {
-        alert('Please select a package to book.');
-        return;
-    }
-
-    fetch('/book-package', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
-          username:username,
-          package_name: packageName }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.message) {
-            alert(data.message);
-            // Optionally redirect:
-            // window.location.href = '/booking-success';
-        } else {
-            alert('Booking failed. Please try again.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Booking failed due to an error.');
-    });
-}
-</script>
 {% endblock %}

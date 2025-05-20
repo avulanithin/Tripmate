@@ -1,19 +1,25 @@
-/* packages.css */
+/* packages.css - Dark Mode Stylish */
 
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
-  background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+  background: linear-gradient(to right, #0d1117, #1c1f26);
   min-height: 100vh;
-  color: #333;
+  display: flex;
+  flex-direction: column;
+  color: #38BDF8;
 }
 
 .container {
+  flex: 1;
   max-width: 900px;
-  margin: 0 auto;
+  margin: 60px auto;
   padding: 40px 20px;
   text-align: center;
+  background: rgba(33, 38, 45, 0.85);
+  border-radius: 20px;
+  box-shadow: 0 0 15px rgba(255, 77, 166, 0.2);
 }
 
 .page-header {
@@ -22,13 +28,13 @@ body {
 
 .page-header h1 {
   font-size: 2.5rem;
-  color: #e60073;
+  color: #38BDF8;
   margin-bottom: 10px;
 }
 
 .page-header .subheading {
   font-size: 1.2rem;
-  color: #666;
+  color: #38BDF8;
 }
 
 .package-dropdown {
@@ -38,37 +44,47 @@ body {
 .package-dropdown label {
   font-size: 1.1rem;
   margin-right: 10px;
+  color: #38BDF8;
 }
 
 #package-select {
   padding: 10px 15px;
   font-size: 1rem;
-  border: 2px solid #e60073;
+  border: 2px solid#38BDF8;
   border-radius: 8px;
+  background-color: #21262d;
+  color: #38BDF8;
   outline: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 1em;
 }
 
 #package-details {
-  background-color: #ffffffcc;
+  display: none;
+  background-color: rgba(33, 38, 45, 0.95);
   padding: 30px;
   border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(144, 202, 249, 0.2);
   margin-top: 20px;
   text-align: left;
+  color: #38BDF8;
 }
 
 #package-details h2 {
-  color: #e60073;
+  color: #b1b4b6;
   margin-bottom: 15px;
 }
 
 #package-details p {
   font-size: 1rem;
   margin: 10px 0;
+  color: #b1b4b6;
 }
 
 .book-btn {
-  background-color: #e60073;
+  background-color: #38BDF8;
   color: white;
   padding: 12px 25px;
   border: none;
@@ -76,9 +92,29 @@ body {
   font-size: 1rem;
   cursor: pointer;
   margin-top: 20px;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .book-btn:hover {
-  background-color: #c7005a;
+  background-color: #38BDF8;
+  transform: scale(1.05);
+}
+
+footer {
+  margin-top: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .container {
+    padding: 30px 15px;
+  }
+
+  #package-details {
+    padding: 20px;
+  }
+
+  .book-btn {
+    width: 100%;
+  }
 }

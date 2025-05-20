@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Group Chat | 𝓣𝓻𝓲𝓹𝓶𝓪𝓽𝓮{% endblock %}
+
+{% block content %}
+<div class="chat-container">
+  <div class="sidebar">
+    <h4>Suggested Friends</h4>
+    <ul id="suggested-list">
+      {% for u in suggested %}
+        <li>
+          {{ u.name }}
+          <button onclick="sendFriendRequest({{ u.id }})">Add Friend</button>
+        </li>
+      {% endfor %}
+    </ul>
+    <h4>Requests</h4>
+    <ul id="requests-list">
+      {% for u in requests %}
+        <li>
+          {{ u.name }}
+          <button onclick="acceptFriendRequest({{ u.id }})">Accept</button>
+        </li>
+      {% endfor %}
+    </ul>
+    <h4>Friends</h4>
+    <ul id="friends-list">
+      {% for u in friends %}
+        <li>
+          {{ u.name }}
+          <button onclick="openChat({{ u.id }}, '{{ u.name }}')" class="chat-btn">Chat</button>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="chat-main">
+    <div id="chat-header"></div>
+    <div id="chat-messages"></div>
+    <form id="chat-form" style="display:none;">
+      <input type="text" id="chat-input" autocomplete="off" placeholder="Type a message...">
+      <button type="submit">Send</button>
+    </form>
+  </div>
+</div>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script>
+const socket = io();
+let currentUserId = {{ user.id if user else 'null' }};
+let currentFriendId = null;
+let currentFriendName = "";
+
+// Join personal room for real-time events
+socket.emit('join_user_room');
+
+// Send friend request
+function sendFriendRequest(friend_id) {
+  socket.emit('send_friend_request', { friend_id });
+}
+
+// Accept friend request
+function acceptFriendRequest(friend_id) {
+  socket.emit('accept_friend_request', { friend_id });
+}
+
+// Listen for incoming friend requests
+socket.on('receive_friend_request', data => {
+  location.reload();
+});
+
+// Listen for accepted requests
+socket.on('friend_request_accepted', data => {
+  location.reload();
+});
+
+// Messaging
+function sendMessage(receiver_id, message) {
+  socket.emit('send_message', { receiver_id, message });
+}
+
+socket.on('new_message', data => {
+  if (currentFriendId && data.sender_id === currentFriendId) {
+    displayMessage(data.sender_id, data.message);
+  }
+});
+
+// Join DM room and show chat UI when opening chat
+function openChat(friend_id, friend_name) {
+  currentFriendId = friend_id;
+  currentFriendName = friend_name;
+  document.getElementById('chat-header').textContent = "Chat with " + friend_name;
+  document.getElementById('chat-form').style.display = '';
+  document.getElementById('chat-messages').innerHTML = '';
+  socket.emit('join_dm', { friend_id });
+
+  // Fetch previous messages
+  fetch(`/api/messages/${friend_id}`)
+    .then(r => r.json())
+    .then(data => {
+      data.messages.forEach(m => {
+        displayMessage(m.sender_id, m.message);
+      });
+    });
+}
+
+// Handle chat form submit
+document.getElementById('chat-form').onsubmit = function(e) {
+  e.preventDefault();
+  const input = document.getElementById('chat-input');
+  const message = input.value;
+  if (message && currentFriendId) {
+    sendMessage(currentFriendId, message);
+    displayMessage(currentUserId, message);
+    input.value = '';
+  }
+};
+
+function displayMessage(sender_id, message) {
+  const chat = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.textContent = (sender_id === currentUserId ? "You: " : currentFriendName + ": ") + message;
+  chat.appendChild(div);
+}
+</script>
+{% endblock %}

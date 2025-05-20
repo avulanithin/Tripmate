@@ -1,40 +1,57 @@
 {% extends "base.html" %}
 
-{% block title %}Home | TripMate{% endblock %}
+{% block title %}Home | 𝓣𝓻𝓲𝓹𝓶𝓪𝓽𝓮 {% endblock %}
 
 {% block content %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}"> <!-- External CSS file -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Welcome to <span class="highlight">TripMate</span></h1>
-      <p>Your ultimate colorful travel planning and budgeting partner.</p>
-      <a href="{{ url_for('packages') }}" class="cta-button">Explore Packages</a>
-    </div>
-  </section>
+<section class="hero">
+  <!-- ✅ Video Background -->
+  <div class="video-background">
+    <video autoplay muted loop playsinline>
+      <source src="{{ url_for('static', filename='videos/bg.mp4') }}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="video-overlay"></div>
+  </div>
 
+  <!-- ✅ Hero Text Content -->
+  <div class="content">
+    <h1>Welcome to <span class="highlight">𝓣𝓻𝓲𝓹𝓶𝓪𝓽𝓮 </span></h1>
+    <p>Your travel buddy for smarter planning, budgeting, and living.</p>
+    <a href="{{ url_for('packages') }}" class="cta-button" aria-label="Explore Travel Packages">Explore Packages</a>
+  </div>
 </section>
 
 <section class="features">
   <div class="feature-box">
-    <a href="{{ url_for('plan_smart') }}" class="feature-link">
+    <a href="{{ url_for('plan_smart') }}" class="feature-link" aria-label="Plan Smart">
       <h3>🌟 Plan Smart</h3>
-      <p>Get exciting, personalized travel suggestions tailored perfectly to your vibe and budget!</p>
+      <p>Get personalized travel suggestions tailored perfectly to your vibe and budget!</p>
     </a>
   </div>
   <div class="feature-box">
-    <a href="{{ url_for('manage_expenses') }}" class="feature-link">
+    <a href="{{ url_for('budget') }}" class="feature-link" aria-label="Manage Expenses">
       <h3>💸 Manage Expenses</h3>
-      <p>Track your spending the easy way — stylish, smart, and simple for stress-free trips.</p>
+      <p>Track your spending the smart way — simple and stress-free for better trips.</p>
     </a>
   </div>
   <div class="feature-box">
-    <a href="{{ url_for('enjoy_more') }}" class="feature-link">
+    <a href="{{ url_for('enjoy_more') }}" class="feature-link" aria-label="Enjoy More">
       <h3>🏖️ Enjoy More</h3>
-      <p>Less planning, more living! Enjoy vibrant experiences that create memories for a lifetime.</p>
+      <p>Less planning, more living! Discover vibrant experiences and lasting memories.</p>
     </a>
   </div>
 </section>
 
+<!-- ✅ Video Autoplay Fix Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const video = document.querySelector('.video-background video');
+    if (video) {
+      video.muted = true;
+      video.play().catch(err => console.warn("Video autoplay issue:", err));
+    }
+  });
+</script>
 {% endblock %}
-

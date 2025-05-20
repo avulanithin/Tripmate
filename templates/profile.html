@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>View/Edit Profile | TripMate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script src="../assets/profile.js" defer></script>
+</head>
+<body>
+  <div id="navbar-include"></div>
+
+  <main class="profile-main">
+    <section class="profile-card" id="profileCard">
+      <div class="profile-pic-section">
+        <img id="profilePic" src="../assets/default-avatar.png" alt="Profile Picture" class="profile-pic">
+        <input type="file" id="profilePicInput" accept="image/*" style="display:none;">
+        <button class="btn neon" id="changePicBtn" style="display:none;">Change Photo</button>
+      </div>
+      <form id="profileForm" autocomplete="off">
+        <div class="profile-fields">
+          <div class="profile-row">
+            <label>Name:</label>
+            <span class="profile-view" id="viewName">Alex Traveler</span>
+            <input class="profile-edit" type="text" id="editName" value="Alex Traveler" style="display:none;">
+          </div>
+          <div class="profile-row">
+            <label>Email:</label>
+            <span class="profile-view" id="viewEmail">alex@tripmate.com</span>
+            <input class="profile-edit" type="email" id="editEmail" value="alex@tripmate.com" style="display:none;">
+          </div>
+          <div class="profile-row">
+            <label>Phone:</label>
+            <span class="profile-view" id="viewPhone">+1 234 567 8901</span>
+            <input class="profile-edit" type="tel" id="editPhone" value="+1 234 567 8901" style="display:none;">
+          </div>
+          <div class="profile-row">
+            <label>DOB:</label>
+            <span class="profile-view" id="viewDOB">1995-06-15</span>
+            <input class="profile-edit" type="date" id="editDOB" value="1995-06-15" style="display:none;">
+          </div>
+          <div class="profile-row">
+            <label>Gender:</label>
+            <span class="profile-view" id="viewGender">Non-binary</span>
+            <select class="profile-edit" id="editGender" style="display:none;">
+              <option>Male</option>
+              <option>Female</option>
+              <option selected>Non-binary</option>
+              <option>Prefer not to say</option>
+            </select>
+          </div>
+          <div class="profile-row">
+            <label>Address:</label>
+            <span class="profile-view" id="viewAddress">123 Main St, Cityville</span>
+            <input class="profile-edit" type="text" id="editAddress" value="123 Main St, Cityville" style="display:none;">
+          </div>
+        </div>
+        <div class="profile-actions">
+          <button type="button" class="btn neon" id="editBtn">Edit</button>
+          <button type="button" class="btn neon" id="saveBtn" style="display:none;">Save</button>
+          <button type="button" class="btn" id="cancelBtn" style="display:none;">Cancel</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <div id="footer-include"></div>
+</body>
+</html>

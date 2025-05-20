@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Profile | 𝓣𝓻𝓲𝓹𝓶𝓪𝓽𝓮{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+
+<section class="profile-section" style="max-width: 500px; margin: 2rem auto;">
+  <h2 style="color:#00bfa6; text-align:center;">👤 Profile</h2>
+  <div class="profile-card" style="
+      background: #161b22;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(25,118,210,0.10);
+      padding: 2rem 2rem 1.5rem 2rem;
+      color: #f0f0f0;
+      margin-top: 1.5rem;
+      ">
+    <div style="display:flex; align-items:center; gap:1.5rem; margin-bottom:1.5rem;">
+      {% if user.profile_pic %}
+        <img src="{{ url_for('static', filename='profile_pics/' ~ user.profile_pic) }}"
+             alt="Profile Picture"
+             class="profile-avatar"
+             style="object-fit:cover;">
+      {% else %}
+        <div class="profile-avatar">
+          {{ user.name[0]|upper }}
+        </div>
+      {% endif %}
+      <div>
+        <h3 style="margin:0; color:#90caf9;">{{ user.name }}</h3>
+        <p style="margin:0; color:#aaa;">@{{ user.username }}</p>
+      </div>
+    </div>
+    <p><strong>Email:</strong> <span style="color:#90caf9;">{{ user.email }}</span></p>
+    <p><strong>Joined:</strong> {{ user.joined_date }}</p>
+    <p><strong>Role:</strong> {{ user.role|default("Traveler") }}</p>
+    <p><strong>Trips Booked:</strong> {{ user.trips_count|default(0) }}</p>
+    <div style="margin-top:2rem; display:flex; gap:1rem;">
+      <a href="{{ url_for('edit_profile', user_id=user.id) }}" class="btn" style="background:#1976d2;">Edit Profile</a>
+      <a href="{{ url_for('previous_trips') }}" class="btn" style="background:#00bfa6;">View Trips</a>
+      <a href="{{ url_for('logout') }}" class="btn" style="background:#d32f2f;">Logout</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,55 +1,167 @@
 {% extends "base.html" %}
 
-{% block title %}Budget Tracker | TripMate{% endblock %}
+{% block title %}Budget Tracker | 𝓣𝓻𝓲𝓹𝓶𝓪𝓽𝓮{% endblock %}
 
 {% block content %}
 
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/budget.css') }}"> <!-- External CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/budget.css') }}">
+
+<div class="logo">
+  <a href="{{ url_for('landing') }}" class="tripmate-logo"></a>
+</div>
 
 <div class="budget-container">
   <h1>Budget Tracker</h1>
 
-  <form class="budget-form" onsubmit="addExpense(event)">
-    <input type="text" id="expenseName" placeholder="Expense Name" required />
-    <input type="number" id="expenseAmount" placeholder="Amount (₹)" min="1" required />
+  <form method="POST" action="{{ url_for('budget') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    {% if not total_budget %}
+      <label for="total_budget">Total Trip Budget:</label>
+      <input type="number" id="total_budget" name="total_budget" required>
+    {% endif %}
+    <label for="expense_name">Expense Name:</label>
+    <input type="text" id="expense_name" name="expense_name" required>
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" name="amount" required>
     <button type="submit">Add Expense</button>
   </form>
 
   <div class="budget-list">
     <h3>Expenses</h3>
-    <div id="expenseItems"></div>
-    <div class="budget-total" id="totalAmount">Total: ₹0</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Expense Name</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in budget_items %}
+          <tr>
+            <td>{{ item.expense_name }}</td>
+            <td>₹{{ item.amount }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="budget-total">
+      Total Budget: ₹{{ total_budget if total_budget else 0 }}<br>
+      Spent: ₹{{ budget_items | sum(attribute='amount') if budget_items else 0 }}<br>
+      <strong>Remaining: ₹{{ (total_budget - (budget_items | sum(attribute='amount'))) if total_budget else 0 }}</strong>
+    </div>
   </div>
 </div>
 
-<script>
-  let total = 0;
+<style>
+/* Align navbar to the right */
+.navbar {
+  justify-content: flex-end !important;
+}
 
-  function addExpense(event) {
-    event.preventDefault();
+/* Budget Tracker Layout */
+.budget-container {
+  max-width: 480px;
+  margin: 3rem auto 2rem auto;
+  background: #181d25;
+  border-radius: 18px;
+  box-shadow: 0 4px 32px rgba(25,118,210,0.13);
+  padding: 2.5rem 2rem 2rem 2rem;
+  border: 1.5px solid #232b36;
+}
 
-    const name = document.getElementById("expenseName").value;
-    const amount = parseFloat(document.getElementById("expenseAmount").value);
+.budget-container h1 {
+  text-align: center;
+  color: #90caf9;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
 
-    if (!name || isNaN(amount) || amount <= 0) {
-      alert("Please enter a valid name and amount.");
-      return;
-    }
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-bottom: 2rem;
+}
 
-    const item = document.createElement("div");
-    item.className = "budget-item";
-    item.innerHTML = `<span>${name}</span><span>₹${amount}</span>`;
+form label {
+  color: #00bfa6;
+  font-weight: 500;
+}
 
-    document.getElementById("expenseItems").appendChild(item);
+form input {
+  background: #232b36;
+  color: #f0f0f0;
+  border: 1.5px solid #1976d2;
+  border-radius: 6px;
+  padding: 0.4rem 0.7rem;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
 
-    total += amount;
-    document.getElementById("totalAmount").textContent = `Total: ₹${total}`;
+form input:focus {
+  border-color: #00bfa6;
+}
 
-    document.getElementById("expenseName").value = "";
-    document.getElementById("expenseAmount").value = "";
+form button {
+  background: linear-gradient(90deg, #1976d2 60%, #00bfa6 100%);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1.4rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.2s, transform 0.2s;
+}
+
+form button:hover {
+  background: linear-gradient(90deg, #00bfa6 60%, #1976d2 100%);
+  transform: scale(1.04);
+}
+
+.budget-list {
+  margin-top: 2rem;
+}
+
+.budget-list h3 {
+  color: #90caf9;
+  margin-bottom: 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #161b22;
+  color: #f5f5f5;
+  margin-bottom: 1rem;
+}
+
+table th, table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #2c2f36;
+}
+
+table th {
+  background-color: #1f262e;
+  color: #00bfa6;
+}
+
+.budget-total {
+  text-align: right;
+  color: #90caf9;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 600px) {
+  .budget-container {
+    padding: 1.2rem 0.5rem;
+    max-width: 98vw;
   }
-</script>
-
+}
+</style>
 {% endblock %}

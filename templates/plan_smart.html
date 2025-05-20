@@ -1,114 +1,106 @@
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Plan Smart - TripMate</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/concept.css') }}">
-</head>
-<body>
-
-<header>
-  <h1>Welcome, {{ email }} ({{ role }})</h1>
-</header>
-
-<main>
-  <!-- Plan Smart Tip Form Dropdown -->
-  <section class="plan-form">
-    <h2>Plan Smart</h2>
-    <p>Learn how to plan your trips smartly and efficiently!</p>
-
-    <!-- Dropdown Button to Show Form -->
-    <div class="dropdown">
-      <button class="dropbtn">Add a Tip</button>
-      <div class="dropdown-content">
-        <form action="{{ url_for('plan_smart') }}" method="POST">
-          <input type="text" name="tip" placeholder="Enter your smart planning tip..." required>
-          <button type="submit">Add Tip</button>
-        </form>
-      </div>
+<!-- filepath: templates/plan_smart.html -->
+{% extends "base.html" %}
+{% block title %}Plan Smart | TripMate{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/plan_smart.css') }}">
+<style>
+.plan-smart-container {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+}
+.planner-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-between;
+}
+.card {
+  background: var(--card-bg, #161b22);
+  border-radius: 14px;
+  box-shadow: 0 2px 16px rgba(0,191,166,0.07);
+  padding: 1.5rem;
+  flex: 1 1 320px;
+  min-width: 300px;
+  color: var(--text, #f5f5f5);
+}
+.daywise-planner {
+  margin-top: 2.5rem;
+  background: var(--card-bg, #161b22);
+  border-radius: 14px;
+  padding: 1.5rem;
+}
+.share-plan {
+  margin-top: 2rem;
+  text-align: center;
+}
+@media (max-width: 900px) {
+  .planner-cards { flex-direction: column; }
+}
+body.light-mode {
+  --card-bg: #f5f5f5;
+  --text: #222;
+}
+body.dark-mode {
+  --card-bg: #161b22;
+  --text: #f5f5f5;
+}
+</style>
+<div class="plan-smart-container">
+  <h1>🧠 Plan Smart</h1>
+  <div class="planner-cards">
+    <!-- Dynamic Trip Planner Card -->
+    <div class="card">
+      <h2>🌍 Trip Planner</h2>
+      <form id="trip-form">
+        <input type="text" name="destination" placeholder="Destination" required>
+        <input type="date" name="start_date" required>
+        <input type="date" name="end_date" required>
+        <button type="submit">Plan My Trip</button>
+      </form>
+      <div id="ai-suggestions"></div>
+      <div id="weather-forecast"></div>
+      <div id="map-preview"></div>
     </div>
-  </section>
-
-  <!-- Plan Tips Display -->
-  <section class="plan-tips">
-    <h3>Smart Planning Tips:</h3>
-    {% if tips %}
-      <ul>
-        {% for tip in tips %}
-          <li>{{ tip }}</li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>No tips added yet. Be the first to add!</p>
-    {% endif %}
-  </section>
-
-  <!-- Trip Itinerary Form Dropdown -->
-  <section class="itinerary-form">
-    <h3>Plan Your Itinerary</h3>
-
-    <!-- Dropdown Button to Show Form -->
-    <div class="dropdown">
-      <button class="dropbtn">Add Itinerary</button>
-      <div class="dropdown-content">
-        <form action="{{ url_for('plan_itinerary') }}" method="POST">
-          <input type="text" name="destination" placeholder="Enter Destination" required>
-          <input type="date" name="start_date" placeholder="Start Date" required>
-          <input type="date" name="end_date" placeholder="End Date" required>
-          <button type="submit">Add Itinerary</button>
-        </form>
-      </div>
+    <!-- Budget Calculator Card -->
+    <div class="card">
+      <h2>💸 Budget Calculator</h2>
+      <form id="budget-form">
+        <input type="number" name="total_budget" placeholder="Total Budget" required>
+        <button type="submit">Calculate</button>
+      </form>
+      <div id="budget-breakdown"></div>
     </div>
-  </section>
-
-  <!-- Itinerary Display -->
-  <section class="itinerary-display">
-    <h3>Your Itinerary:</h3>
-    {% if itineraries %}
-      <ul>
-        {% for itinerary in itineraries %}
-          <li>{{ itinerary.destination }}: {{ itinerary.start_date }} to {{ itinerary.end_date }}</li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>No itineraries added yet. Add one to get started!</p>
-    {% endif %}
-  </section>
-
-  <!-- Budget Form Dropdown -->
-  <section class="budget-form">
-    <h3>Set Your Budget</h3>
-
-    <!-- Dropdown Button to Show Form -->
-    <div class="dropdown">
-      <button class="dropbtn">Set Budget</button>
-      <div class="dropdown-content">
-        <form action="{{ url_for('plan_budget') }}" method="POST">
-          <input type="text" name="category" placeholder="Enter Budget Category (e.g., food, travel)" required>
-          <input type="number" name="amount" placeholder="Enter Amount" required>
-          <button type="submit">Set Budget</button>
-        </form>
-      </div>
+    <!-- Packing Checklist Card -->
+    <div class="card">
+      <h2>🧳 Packing Checklist</h2>
+      <form id="packing-form">
+        <input type="text" name="trip_type" placeholder="Trip Type (e.g. Beach, Hiking)">
+        <button type="submit">Generate Checklist</button>
+      </form>
+      <ul id="packing-list"></ul>
     </div>
-  </section>
-
-  <!-- Budget Display -->
-  <section class="budget-display">
-    <h3>Your Budget:</h3>
-    {% if budgets %}
-      <ul>
-        {% for budget in budgets %}
-          <li>{{ budget.category }}: ${{ budget.amount }}</li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>No budgets added yet. Add your budget to get started!</p>
-    {% endif %}
-  </section>
-
-</main>
-
-</body>
-</html>
+  </div>
+  <!-- Day-wise Planner with Drag-and-Drop -->
+  <div class="daywise-planner">
+    <h2>📅 Day-wise Planner</h2>
+    <div id="planner-days" class="planner-days"></div>
+  </div>
+  <!-- Share Plan -->
+  <div class="share-plan">
+    <button id="share-friends">Share with Friends</button>
+    <button id="share-social">Share on Social Media</button>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script src="{{ url_for('static', filename='js/plan_smart.js') }}"></script>
+<script>
+document.getElementById('theme-toggle').onclick = function() {
+  document.body.classList.toggle('light-mode');
+  document.body.classList.toggle('dark-mode');
+};
+window.onload = () => {
+  document.body.classList.add('dark-mode');
+};
+</script>
+{% endblock %}

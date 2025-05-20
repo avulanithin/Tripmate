@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Edit Profile{% endblock %}
+{% block content %}
+<div class="profile-card">
+  <form method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="profile-pic-section">
+      {% if user.profile_pic %}
+        <img src="{{ url_for('static', filename='profile_pics/' ~ user.profile_pic) }}" alt="Profile Picture" class="profile-avatar">
+      {% else %}
+        <div class="profile-avatar">{{ user.name[0]|upper }}</div>
+      {% endif %}
+      <input type="file" name="profile_pic" accept="image/*">
+    </div>
+    <label>Name:</label>
+    <input type="text" name="name" value="{{ user.name }}" required>
+    <label>Email:</label>
+    <input type="email" name="email" value="{{ user.email }}" required>
+    <label>Phone:</label>
+    <input type="text" name="phone" value="{{ user.phone }}">
+    <label>Emergency Contact:</label>
+    <input type="text" name="emergency_contact" value="{{ user.emergency_contact }}">
+    <button type="submit" class="btn">Save Changes</button>
+    <a href="{{ url_for('view_profile') }}" class="btn">Cancel</a>
+  </form>
+</div>
+{% endblock %}
+<style>
+.profile-card {
+  background: #181d25;
+  border-radius: 18px;
+  box-shadow: 0 4px 32px rgba(25,118,210,0.13);
+  padding: 2.5rem 2rem 2rem 2rem;
+  max-width: 420px;
+  width: 100%;
+  margin: 2rem auto;
+  border: 1.5px solid #232b36;
+  text-align: center;
+}
+.profile-pic-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.profile-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: linear-gradient(135deg,#1976d2,#00bfa6);
+  color: #fff;
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.btn {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1.4rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin: 0.5rem;
+  transition: background 0.2s, transform 0.2s;
+}
+.btn:hover {
+  background: #00bfa6;
+  transform: scale(1.04);
+}
+</style>

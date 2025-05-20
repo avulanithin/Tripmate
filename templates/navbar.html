@@ -1,0 +1,173 @@
+<nav class="navbar">
+  <div class="logo">
+    <span style="font-family: 'Brush Script MT', cursive; font-size:2rem; color:#38bdf8; font-weight:bold;">Trip</span><span style="font-family: 'Brush Script MT', cursive; font-size:2rem; color:#00bfa6; font-weight:bold;">mate</span>
+  </div>
+  <button class="hamburger" aria-label="Toggle navigation" onclick="toggleNav()">☰</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="{{ url_for('landing') }}">Home</a></li>
+    <li><a href="{{ url_for('packages') }}">Packages</a></li>
+    <li><a href="{{ url_for('budget') }}">Budget Tracker</a></li>
+    <li><a href="{{ url_for('plan_smart') }}">Plan Smart</a></li>
+    <li><a href="{{ url_for('group_chat') }}">Group Chat</a></li>
+    <li><a href="{{ url_for('about') }}">About</a></li>
+    <li><a href="{{ url_for('my_bookings') }}">My Bookings</a></li>
+  </ul>
+  <div class="navbar-right">
+    <div class="profile-dropdown">
+      <button class="profile-btn">
+        <span class="profile-circle">U</span> Profile ▾
+      </button>
+      <div class="dropdown-content">
+        <a href="{{ url_for('view_profile') }}">View Profile</a>
+        <a href="{{ url_for('edit_profile') }}">Edit Profile</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<style>
+.navbar {
+  background: #161b22;
+  color: #fff;
+  padding: 0.7rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.logo {
+  font-size: 2rem;
+  font-family: 'Brush Script MT', cursive;
+  font-weight: bold;
+  letter-spacing: 1px;
+  user-select: none;
+}
+.hamburger {
+  display: none;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: #38bdf8;
+  cursor: pointer;
+  margin-left: auto;
+}
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+  font-size: 1rem;
+}
+.nav-links a:hover {
+  color: #00bfa6;
+}
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+.profile-dropdown {
+  position: relative;
+}
+.profile-btn {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem 0.5rem 0.7rem;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.profile-circle {
+  background: #06d6a0;
+  color: #fff;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-right: 0.5rem;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background: #23272f;
+  min-width: 160px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  right: 0;
+  z-index: 1001;
+  margin-top: 0.5rem;
+}
+.profile-dropdown:hover .dropdown-content,
+.profile-dropdown:focus-within .dropdown-content {
+  display: block;
+}
+.dropdown-content a {
+  color: #fff;
+  padding: 0.7rem 1rem;
+  display: block;
+  text-decoration: none;
+  border-bottom: 1px solid #222;
+  font-size: 1rem;
+}
+.dropdown-content a:last-child {
+  border-bottom: none;
+}
+.dropdown-content a:hover {
+  background: #00bfa6;
+  color: #fff;
+}
+
+/* Responsive styles */
+@media (max-width: 900px) {
+  .nav-links {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: #161b22;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 1rem 0;
+    display: none;
+    z-index: 999;
+  }
+  .nav-links.show {
+    display: flex;
+  }
+  .nav-links li {
+    width: 100%;
+    padding: 0.7rem 1.5rem;
+  }
+  .navbar-right {
+    margin-left: 0.5rem;
+  }
+  .hamburger {
+    display: block;
+  }
+}
+</style>
+<script>
+function toggleNav() {
+  var navLinks = document.getElementById('navLinks');
+  navLinks.classList.toggle('show');
+}
+</script>

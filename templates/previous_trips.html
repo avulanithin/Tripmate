@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previous Trips | 𝓣𝓻𝓲𝓹𝓶𝓪𝓽𝓮</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+</head>
+<body>
+    <div class="page-container">
+        <header class="navbar fixed-header">
+            <div class="logo"><a href="{{ url_for('landing') }}">TripMate</a></div>
+        </header>
+
+        <div class="content-wrap">
+            <h1>Your Previous Trips</h1>
+            <ul class="trip-list">
+                {% for trip in trips %}
+                    <li class="trip-item">
+                        <h3>{{ trip.trip_name }}</h3>
+                        <p><strong>Date:</strong> {{ trip.trip_date }}</p>
+                        <p><strong>Budget:</strong> ₹{{ trip.budget }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2025 TripMate. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}My Bookings | 𝓣𝓻𝓲𝓹𝓶𝓪𝓽𝓮{% endblock %}
+
+{% block content %}
+<main class="content-wrap">
+    <h1>My Bookings</h1>
+    <div class="bookings-container">
+        {% for booking in bookings %}
+            <div class="card">
+                <h3>{{ booking.title }}</h3>
+                <p>{{ booking.description }}</p>
+                <p><strong>Price:</strong> ₹{{ booking.price }}</p>
+                <p><strong>Total Days:</strong> {{ booking.total_days }}</p>
+                {% if booking.image_path %}
+                    <img src="{{ url_for('static', filename='uploads/' + booking.image_path) }}" alt="Package Image" width="100%">
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}
