@@ -1,5 +1,5 @@
 # TripMate - Your Smart Travel Companion
-TripMate is a smart travel planning app that leverages Neo4j for highly connected data like user relationships, travel itineraries, and collaborative planning. It enables users to book packages, plan trips, track budgets, chat with group members, and manage everything from a single platform
+TripMate is a smart travel planning app that lets you book packages, plan trips, track budgets, chat with group members, and manage everything from a single platform.
 
 ## Features
 User Management
@@ -38,25 +38,19 @@ Manage Users & Packages – View  packages and edit
 ![WhatsApp Image 2025-05-18 at 22 07 03_f38d530c](https://github.com/user-attachments/assets/e38c74ff-6ef6-4518-90c6-e89437cdacf4)
 
 
-## Why Neo4j?
-Trip planning involves deeply connected data—users, destinations, packages, expenses, messages, etc. Neo4j provides:
-Intuitive modeling of relationships (e.g., who is in which group, booked what, shared what)
-Fast traversal for itinerary and group-related queries
-Flexibility in evolving trip structures without rigid schemas
+## Data storage
+Local development uses SQLite via SQLAlchemy. No external database is required.
 
 ## Tech Stack
 Frontend: Html / css,js
 
-Database: Neo4j (via neo4j-driver)
+Database: SQLite (via SQLAlchemy)
 
 Admin Panel: custom dashboard
 
-## Sample Code Snippet (Neo4j Query)
-// Get user itinerary
-const result = await session.run(`
-  MATCH (u:User {id: $userId})-[:PLANNED]->(t:Trip)
-  RETURN t
-, { userId });
+## Run locally
+- Create a virtual environment and install dependencies
+- Start the Flask app (it will create a local SQLite DB file on first run)
 
 ##  Contributing
 Fork the repo
@@ -65,7 +59,7 @@ Commit your changes
 Open a pull request
 
 ## Conclusion
-TripMate is designed to make travel planning smarter, easier, and more collaborative. With a powerful Neo4j-backed backend, real-time features like group chat, and a user-friendly interface, it’s the ultimate companion for solo travelers and groups alike.
+TripMate is designed to make travel planning smarter, easier, and more collaborative. With a simple local SQLite backend for development, real-time features like group chat, and a user-friendly interface, it’s the ultimate companion for solo travelers and groups alike.
 Whether you're booking a package, tracking your trip budget, or planning every stop on your itinerary, TripMate keeps everything connected—just like your journey should be.
 We’re constantly improving, so feel free to contribute, share feedback, or get in touch. Happy travels!
 

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container" style="margin:2rem auto;">
+  <h2>My Trips</h2>
+  {% if trips and trips|length > 0 %}
+    <ul>
+      {% for trip in trips %}
+        <li>{{ trip.name or 'Trip' }} — {{ trip.destination or '' }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No trips yet.</p>
+  {% endif %}
+
+  <h3>Suggested Friends</h3>
+  {% if suggested_friends and suggested_friends|length > 0 %}
+    <ul>
+      {% for u in suggested_friends %}
+        <li>{{ u.name }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No suggestions right now.</p>
+  {% endif %}
+</div>
+{% endblock %}
